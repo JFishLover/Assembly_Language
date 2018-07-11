@@ -1,0 +1,45 @@
+DATA SEGMENT
+     AA DB 0,1,2,3,4,5,6,7,8,9
+     MIN DB 11
+     MAX DB 0
+DATA ENDS
+CODE SEGMENT 
+     ASSUME DS:DATA,CS:CODE
+     MOV AX,DATA
+     MOV DS,AX
+     ;LEA DX,AA
+     ;MOV AH,0AH
+     ;INT 21H
+     MOV CH,0
+     MOV CL,10
+   BJ:
+     MOV SI,0
+     MOV BL,AA[SI]
+     CMP BL,MIN
+     JL XXX
+     JMP BD
+   XXX:
+     MOV MIN,BL
+   BD:
+     CMP BL,MAX
+     JG DDD
+     JMP JJ
+   DDD:
+     MOV MAX,BL
+   JJ:
+     INC SI
+     LOOP BJ
+   
+   EE:
+     MOV DL,MIN
+     ADD DL,30H
+     MOV AH,02H
+     INT 21H
+     MOV DL,MAX
+     ADD DL,30H
+     MOV AH,02H
+     INT 21H
+     MOV AH,4CH
+     INT 21H
+CODE ENDS
+    END
